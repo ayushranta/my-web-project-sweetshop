@@ -54,23 +54,24 @@ project-folder(home)/
 
 ## 🖼️ Screenshots
 <img width="1125" height="600" alt="image" src="https://github.com/user-attachments/assets/a67c6a33-00c1-40a5-aa8b-0044af0f1579" />
-<img width="1125" height="593" alt="image" src="https://github.com/user-attachments/assets/4db73eda-08ef-4e4c-bebf-853eaa809ad8" />
+<img width="1125" height="593" alt="image" src="https://github.com/user-attachments/assets/d5e339ae-7723-4a4b-bd17-ed3f1e7b3f4b" />
+<img width="1125" height="593" alt="image" src="https://github.com/user-attachments/assets/090966a0-17ef-41dc-9b46-798c2d019a49" />
+<img width="1125" height="593" alt="image" src="https://github.com/user-attachments/assets/245fe01f-7665-4d59-8074-683dbea84ca3" />
 
-<img width="1125" height="593" alt="image" src="https://github.com/user-attachments/assets/b894b2e1-b3c7-46d5-84bf-132cec14e595" />
-<img width="1125" height="593" alt="image" src="https://github.com/user-attachments/assets/0a95dcd1-6baa-4337-855c-669090f47520" />
 
 ### **1. Signup Page**
-<img width="1125" height="593" alt="image" src="https://github.com/user-attachments/assets/2caa79c7-4e68-4f15-81e7-142ad099431c" />
+<img width="1125" height="593" alt="image" src="https://github.com/user-attachments/assets/c492f8d1-ebe5-467d-b709-c9328b34750c" />
+
 
 ### **2. Login Page and Admin Login Page**
-<img width="1125" height="593" alt="image" src="https://github.com/user-attachments/assets/99533347-9ea3-42c5-a8ab-04ce109ac04d" />
-<img width="1125" height="593" alt="image" src="https://github.com/user-attachments/assets/cfde8274-2cbc-4023-bdc1-93ddb400f807" />
+<img width="1125" height="593" alt="image" src="https://github.com/user-attachments/assets/69f918d9-2fbf-4f95-8697-39ab6d98def5" />
+<img width="1125" height="593" alt="image" src="https://github.com/user-attachments/assets/1f327a4d-efcf-4453-9689-5e1d42c608f1" />
 
 ### **3. MySQL Table Structure**
-<img width="1125" height="371" alt="image" src="https://github.com/user-attachments/assets/67e07324-90fc-4431-a805-2586216c67bd" />
+<img width="1125" height="371" alt="image" src="https://github.com/user-attachments/assets/48449f78-837f-4ce5-a6a0-8def54d3710e" />
 
 ### **4. Admin Dashboard (Update Quantity)**
-<img width="1125" height="593" alt="image" src="https://github.com/user-attachments/assets/0e794cb1-73b2-4b51-9465-9e6fd181aef2" />
+<img width="1125" height="593" alt="image" src="https://github.com/user-attachments/assets/06d4747b-2cdc-4098-a437-119c1a44fc9d" />
 
 ---
 
@@ -83,7 +84,7 @@ git clone https://github.com/your-username/your-repo-name.git
 
 ### **📌 Step 2: Install Backend Dependencies**
 Navigate to backend folder:
-<img width="1125" height="593" alt="image" src="https://github.com/user-attachments/assets/e62caec2-43ea-4961-bbd3-127947d9ff1e" />
+<img width="971" height="536" alt="image" src="https://github.com/user-attachments/assets/96b7f0a5-f8a3-492b-891d-5f14ed15fad1" />
 
 ```bash
 cd backend
@@ -93,10 +94,10 @@ npm install
 ### **📌 Step 3: Start XAMPP**
 - Start **Apache**
 - Start **MySQL**
-<img width="1125" height="593" alt="image" src="https://github.com/user-attachments/assets/f85f126a-5791-4283-940d-77f107f89f0e" />
+<img width="1049" height="677" alt="image" src="https://github.com/user-attachments/assets/c3df0669-3d02-45c8-b1f8-858eb6d61f33" />
 
 Open phpMyAdmin → create database:
-<img width="1125" height="600" alt="image" src="https://github.com/user-attachments/assets/bd43b1a7-7096-4c17-872f-4e0e0a9249be" />
+<img width="1125" height="600" alt="image" src="https://github.com/user-attachments/assets/48c8bae0-4554-48b5-8416-b55bf3c7871f" />
 
 ```
 user_database
@@ -117,7 +118,7 @@ CREATE TABLE users (
 ```
 
 ### **📌 Step 4: Run Backend Server**
-<img width="1125" height="600" alt="image" src="https://github.com/user-attachments/assets/23671e9f-e3a3-49fa-aed9-106715ea6254" />
+<img width="971" height="536" alt="image" src="https://github.com/user-attachments/assets/4880773f-ed5f-40f9-8e11-b4bfd4a29a2e" />
 
 ```bash
 
