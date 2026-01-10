@@ -53,7 +53,7 @@ project-folder(home)/
 ---
 
 ## 🖼️ Screenshots
-<img width="1125" height="600" alt="image" src="https://github.com/user-attachments/assets/a67c6a33-00c1-40a5-aa8b-0044af0f1579" />
+<img width="1125" height="593" alt="image" src="https://github.com/user-attachments/assets/13b28c0f-a1f5-4462-9cec-64f39d0379ca" />
 <img width="1125" height="593" alt="image" src="https://github.com/user-attachments/assets/d5e339ae-7723-4a4b-bd17-ed3f1e7b3f4b" />
 <img width="1125" height="593" alt="image" src="https://github.com/user-attachments/assets/090966a0-17ef-41dc-9b46-798c2d019a49" />
 <img width="1125" height="593" alt="image" src="https://github.com/user-attachments/assets/245fe01f-7665-4d59-8074-683dbea84ca3" />
