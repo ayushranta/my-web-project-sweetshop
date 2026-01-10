@@ -1,10 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const mysql = require('mysql');
+const mysql = require('mysql2');  // FIXED
 
 const app = express();
-const port = process.env.PORT || 3000; // Render assigns a port
+const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
@@ -27,6 +27,13 @@ db.connect(err => {
     } else {
         console.log("✅ Connected to Railway MySQL!");
     }
+});
+
+// --------------------------
+// Root route
+// --------------------------
+app.get("/", (req, res) => {
+    res.send("Server is running on Render!");
 });
 
 // ==========================
@@ -84,7 +91,6 @@ app.post('/admin-login', (req, res) => {
         return res.status(400).json({ message: 'Username and password are required' });
     }
 
-    // Example: hardcoded admin credentials
     const adminUsername = "admin";
     const adminPassword = "admin123";
 
@@ -96,7 +102,7 @@ app.post('/admin-login', (req, res) => {
 });
 
 // ==========================
-// Update Item Quantity (Admin Only)
+// Update Item Quantity
 // ==========================
 app.post('/update-item', (req, res) => {
     const { item_id, quantity } = req.body;
@@ -121,4 +127,3 @@ app.post('/update-item', (req, res) => {
 app.listen(port, () => {
     console.log(`🚀 Server running on port ${port}`);
 });
-
