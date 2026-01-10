@@ -14,11 +14,11 @@ app.use(bodyParser.json());
 // MySQL Connection (Railway)
 // ==========================
 const db = mysql.createConnection({
-    host: process.env.DB_HOST || "mysql.railway.internal",
+    host: process.env.DB_HOST || "switchback.proxy.rlwy.net",
     user: process.env.DB_USER || "root",
     password: process.env.DB_PASSWORD || "fiDPPaELEgJVmzlmibHzTbXHEpkKwcnM",
     database: process.env.DB_NAME || "railway",
-    port: process.env.DB_PORT || 3306
+    port: process.env.DB_PORT || 12989
 });
 
 db.connect(err => {
@@ -121,3 +121,4 @@ app.post('/update-item', (req, res) => {
 app.listen(port, () => {
     console.log(`🚀 Server running on port ${port}`);
 });
+
