@@ -4,30 +4,34 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Render assigns a port
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
-// Database Connection (Ensure Port is Correct)
+// ==========================
+// MySQL Connection (Railway)
+// ==========================
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '', // Update if needed
-    database: 'user_database',
- // Make sure this matches your XAMPP MySQL port
+    host: process.env.DB_HOST || "mysql.railway.internal",
+    user: process.env.DB_USER || "root",
+    password: process.env.DB_PASSWORD || "fiDPPaELEgJVmzlmibHzTbXHEpkKwcnM",
+    database: process.env.DB_NAME || "railway",
+    port: process.env.DB_PORT || 3306
 });
 
 db.connect(err => {
     if (err) {
-        console.error('Database connection failed:', err);
+        console.error("❌ Database connection failed:", err);
     } else {
-        console.log('Connected to MySQL Database on Port 3307');
+        console.log("✅ Connected to Railway MySQL!");
     }
 });
 
-// User Signup Route
+// ==========================
+// User Signup
+// ==========================
 app.post('/signup', (req, res) => {
     const { name, dob, address, gender, email, password } = req.body;
 
@@ -45,7 +49,9 @@ app.post('/signup', (req, res) => {
     });
 });
 
-// User Login Route
+// ==========================
+// User Login
+// ==========================
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
 
@@ -68,8 +74,50 @@ app.post('/login', (req, res) => {
     });
 });
 
+// ==========================
+// Admin Login
+// ==========================
+app.post('/admin-login', (req, res) => {
+    const { username, password } = req.body;
 
+    if (!username || !password) {
+        return res.status(400).json({ message: 'Username and password are required' });
+    }
+
+    // Example: hardcoded admin credentials
+    const adminUsername = "admin";
+    const adminPassword = "admin123";
+
+    if (username === adminUsername && password === adminPassword) {
+        res.status(200).json({ message: 'Admin login successful!' });
+    } else {
+        res.status(401).json({ message: 'Invalid admin credentials' });
+    }
+});
+
+// ==========================
+// Update Item Quantity (Admin Only)
+// ==========================
+app.post('/update-item', (req, res) => {
+    const { item_id, quantity } = req.body;
+
+    if (!item_id || quantity === undefined) {
+        return res.status(400).json({ message: 'Item ID and quantity are required' });
+    }
+
+    const query = "UPDATE items SET quantity = ? WHERE id = ?";
+    db.query(query, [quantity, item_id], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: 'Error updating item' });
+        }
+        res.status(200).json({ message: 'Item quantity updated successfully!' });
+    });
+});
+
+// ==========================
 // Start Server
+// ==========================
 app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+    console.log(`🚀 Server running on port ${port}`);
 });
