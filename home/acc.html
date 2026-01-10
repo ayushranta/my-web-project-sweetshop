@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="adminApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Stock Management</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid black; padding: 10px; text-align: center; }
+        th { background: orangered; color: white; }
+        button { padding: 5px 10px; cursor: pointer; margin: 2px; }
+        .add-btn { background: green; color: white; border: none; }
+        .remove-btn { background: red; color: white; border: none; }
+    </style>
+    <!-- Include AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="AdminController">
+    <h1>Admin Dashboard - Stock Management</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="(item, details) in stock">
+                <td>{{ item }}</td>
+                <td>Rs. {{ details.price }}</td>
+                <td>{{ details.quantity }}</td>
+                <td>
+                    <button class="add-btn" ng-click="updateStock(item, 'add')">➕ Add</button>
+                    <button class="remove-btn" ng-click="updateStock(item, 'remove')">➖ Remove</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <button onclick="window.location.href='home_1.html'">Home Page</button>
+
+    <script>
+        var app = angular.module('adminApp', []);
+
+        app.controller('AdminController', function ($scope, $timeout) {
+            const defaultStock = {
+                "Milk Cake": { price: 399, quantity: 10 },
+                "Kaju Katli": { price: 999, quantity: 8 },
+                "Peda": { price: 399, quantity: 15 },
+                "Rasgulla": { price: 499, quantity: 12 },
+                "Soan Papdi": { price: 299, quantity: 10 },
+                "Gulab Jamun": { price: 399, quantity: 14 },
+                "Jalebi": { price: 499, quantity: 9 },
+                "Natkhat Nimbu 200g": { price: 60, quantity: 20 },
+                "Aloo Lachha": { price: 55, quantity: 18 },
+                "Lajawab Mixture": { price: 65, quantity: 15 },
+                "Bhelpuri Mixture": { price: 60, quantity: 16 },
+                "Matar Masala": { price: 55, quantity: 22 },
+                "Boondi": { price: 60, quantity: 17 },
+                "Khatta Meetha": { price: 65, quantity: 13 }
+            };
+
+            // Load stock from localStorage or use default values
+            let storedStock = JSON.parse(localStorage.getItem('stock'));
+
+            if (!storedStock || Object.keys(storedStock).length === 0) {
+                storedStock = defaultStock;
+                localStorage.setItem('stock', JSON.stringify(storedStock));
+            }
+
+            $scope.stock = storedStock;
+
+            // Function to update stock
+            $scope.updateStock = function (item, action) {
+                let qty = prompt(`Enter quantity to ${action} for ${item}:`);
+                if (qty && !isNaN(qty) && parseInt(qty) > 0) {
+                    qty = parseInt(qty);
+
+                    if (action === 'add') {
+                        $scope.stock[item].quantity += qty;
+                        alert(`${qty} units added to ${item}.`);
+                    } else if (action === 'remove') {
+                        if ($scope.stock[item].quantity - qty < 0) {
+                            alert(`Not enough stock! You only have ${$scope.stock[item].quantity} units.`);
+                        } else {
+                            $scope.stock[item].quantity -= qty;
+                            alert(`${qty} units removed from ${item}.`);
+                        }
+                    }
+
+                    // Save updated stock to localStorage
+                    localStorage.setItem('stock', JSON.stringify($scope.stock));
+
+                    // Ensure AngularJS updates UI
+                    $timeout(function () {
+                        $scope.$apply();
+                    });
+                }
+            };
+        });
+    </script>
+</body>
+</html>

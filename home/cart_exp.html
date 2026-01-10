@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="cartApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Delights - Cart</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff5e1;
+            color: #6b4f4f;
+        }
+
+        header {
+            background-color: red;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: yellow;
+        }
+
+        nav .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #6b4f4f;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .cart-section {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .cart-container {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 20px;
+            justify-items: center;
+        }
+
+        .cart-item {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+
+        .cart-item h3 {
+            margin: 10px 0;
+            color: #6b4f4f;
+        }
+
+        .cart-item p {
+            color: #ff6f61;
+            font-size: 18px;
+        }
+
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .remove-button {
+            background-color: #ff3b2f;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .checkout-button {
+            background-color: #ff6f61;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .total-amount {
+            font-size: 24px;
+            color: #6b4f4f;
+            margin-top: 20px;
+        }
+    </style>
+    <!-- Include AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="CartController">
+    <header>
+        <h1>Your Cart</h1>
+    </header>
+
+    <nav>
+        <div class="logo" onclick="location.href='home_1.html'">
+            Sweet Delights
+        </div>
+    </nav>
+
+    <section class="cart-section">
+        <div class="cart-container">
+            <!-- Cart Items -->
+            <div class="cart-item" ng-repeat="item in cartItems">
+                <h3>{{ item.name }}</h3>
+                <p>Rs. {{ item.price * item.quantity }}</p>
+                <input type="number" class="quantity-input" ng-model="item.quantity" min="1" ng-change="updateTotal()">
+                <button class="remove-button" ng-click="removeItem(item)">Remove</button>
+            </div>
+
+            <!-- If Cart is Empty -->
+            <div ng-if="cartItems.length === 0">
+                <p>Your cart is empty. Add some sweet delights!</p>
+            </div>
+        </div>
+
+        <!-- Total Amount -->
+        <div class="total-amount" ng-if="cartItems.length > 0">
+            Total: Rs. {{ totalAmount }}
+        </div>
+
+        <!-- Checkout Button -->
+        <button class="checkout-button" ng-click="checkout()" ng-if="cartItems.length > 0">Checkout</button>
+    </section>
+
+    <script>
+        var app = angular.module('cartApp', []);
+
+        app.controller('CartController', function ($scope) {
+            // Load cart items from localStorage
+            $scope.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+            // Update total amount
+            $scope.updateTotal = function () {
+                $scope.totalAmount = $scope.cartItems.reduce(function (total, item) {
+                    return total + (item.price * item.quantity);
+                }, 0);
+                localStorage.setItem('cartItems', JSON.stringify($scope.cartItems));
+            };
+
+            // Remove item from cart
+            $scope.removeItem = function (item) {
+                const index = $scope.cartItems.indexOf(item);
+                if (index > -1) {
+                    $scope.cartItems.splice(index, 1);
+                }
+                localStorage.setItem('cartItems', JSON.stringify($scope.cartItems));
+                $scope.updateTotal();
+            };
+
+            // Checkout function
+            $scope.checkout = function () {
+                if ($scope.cartItems.length === 0) {
+                    alert('Your cart is empty!');
+                    return;
+                }
+
+                // Reduce stock in admin panel
+                let stock = JSON.parse(localStorage.getItem('stock')) || {};
+                $scope.cartItems.forEach(item => {
+                    if (stock[item.name] && stock[item.name].quantity >= item.quantity) {
+                        stock[item.name].quantity -= item.quantity;
+                    }
+                });
+
+                // Save updated stock
+                localStorage.setItem('stock', JSON.stringify(stock));
+
+                // ✅ Save ordered items separately for the bill page
+                localStorage.setItem('orderedItems', JSON.stringify($scope.cartItems));
+
+                // ✅ Clear only `cartItems` in localStorage but keep `orderedItems`
+                localStorage.removeItem('cartItems');
+
+                // Reset the cartItems array in AngularJS
+                $scope.cartItems = [];
+                $scope.totalAmount = 0;
+
+                alert('Proceed to pay!');
+                
+                // ✅ Redirect to bill page
+                window.location.href = "bill.html";
+            };
+
+            // Initialize total amount
+            $scope.updateTotal();
+        });
+    </script>
+</body>
+</html>
