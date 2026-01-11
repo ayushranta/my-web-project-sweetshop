@@ -8,16 +8,24 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // ==========================
-// Middleware
+// CORS + JSON Middleware
 // ==========================
-app.use(cors());
-app.use(bodyParser.json());
+app.use(cors({
+    origin: "*",               // Allow all frontends
+    methods: ["GET", "POST"],  // Allow required methods
+    allowedHeaders: ["Content-Type"]
+}));
 
-// Serve all static HTML, CSS, JS, images, videos from public/
+app.use(bodyParser.json());
+app.use(express.json());
+
+// ==========================
+// Serve static frontend
+// ==========================
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ==========================
-// MySQL Connection (Railway)
+// MySQL Connection
 // ==========================
 const db = mysql.createConnection({
     host: process.env.DB_HOST || "switchback.proxy.rlwy.net",
@@ -36,26 +44,30 @@ db.connect(err => {
 });
 
 // ==========================
-// Root route → your homepage
+// Home Route
 // ==========================
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "home_0.html"));
 });
 
 // ==========================
-// User Signup
+// User Signup API
 // ==========================
 app.post('/signup', (req, res) => {
+    console.log("📩 Signup Request Received:", req.body); // Debug log
+
     const { name, dob, address, gender, email, password } = req.body;
 
     if (!name || !dob || !address || !gender || !email || !password) {
         return res.status(400).json({ message: 'All fields are required!' });
     }
 
-    const query = "INSERT INTO users (name, dob, address, gender, email, password) VALUES (?, ?, ?, ?, ?, ?)";
+    const query = `INSERT INTO users (name, dob, address, gender, email, password)
+                   VALUES (?, ?, ?, ?, ?, ?)`;
+
     db.query(query, [name, dob, address, gender, email, password], (err, result) => {
         if (err) {
-            console.error(err);
+            console.error("❌ Signup DB Error:", err);
             return res.status(500).json({ message: 'Error registering user' });
         }
         res.status(201).json({ message: 'User registered successfully!' });
@@ -63,9 +75,11 @@ app.post('/signup', (req, res) => {
 });
 
 // ==========================
-// User Login
+// User Login API
 // ==========================
 app.post('/login', (req, res) => {
+    console.log("📩 Login Request:", req.body);
+
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -73,54 +87,18 @@ app.post('/login', (req, res) => {
     }
 
     const query = "SELECT * FROM users WHERE email = ? AND password = ?";
+
     db.query(query, [email, password], (err, results) => {
         if (err) {
-            console.error(err);
+            console.error("❌ Login DB Error:", err);
             return res.status(500).json({ message: 'Database error' });
         }
 
         if (results.length > 0) {
-            res.status(200).json({ message: 'Login successful!', token: "fake-jwt-token" });
+            res.status(200).json({ message: 'Login successful!' });
         } else {
             res.status(401).json({ message: 'Invalid credentials' });
         }
-    });
-});
-
-// ==========================
-// Admin Login
-// ==========================
-app.post('/admin-login', (req, res) => {
-    const { username, password } = req.body;
-
-    if (!username || !password) {
-        return res.status(400).json({ message: 'Username and password are required' });
-    }
-
-    if (username === "admin" && password === "admin123") {
-        res.status(200).json({ message: 'Admin login successful!' });
-    } else {
-        res.status(401).json({ message: 'Invalid admin credentials' });
-    }
-});
-
-// ==========================
-// Update Item Quantity
-// ==========================
-app.post('/update-item', (req, res) => {
-    const { item_id, quantity } = req.body;
-
-    if (!item_id || quantity === undefined) {
-        return res.status(400).json({ message: 'Item ID and quantity are required' });
-    }
-
-    const query = "UPDATE items SET quantity = ? WHERE id = ?";
-    db.query(query, [quantity, item_id], (err, result) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ message: 'Error updating item' });
-        }
-        res.status(200).json({ message: 'Item quantity updated successfully!' });
     });
 });
 
