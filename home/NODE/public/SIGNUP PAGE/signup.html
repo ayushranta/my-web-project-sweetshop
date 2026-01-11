@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <style>
+        /* Set background image */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('img2.jpg'); /* Set the image URL here */
+            background-size: cover; /* Make sure the image covers the whole screen */
+            background-position: center; /* Center the image */
+            background-attachment: fixed; /* Keep the background fixed when scrolling */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* Full height of the viewport */
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: red ;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Sign Up </h1>
+    <form name="customerSignUpForm" onsubmit="registerUser(event)">
+        <div class="form-group">
+            <label for="Name">Name:</label>
+            <input type="text" name="Name" placeholder="Enter Your Name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="DOB">Date Of Birth:</label>
+            <input type="date" name="DOB" placeholder="Enter your DOB" required>
+        </div>
+
+        <div class="form-group">
+            <label for="ADDRESS">Address:</label>
+            <input type="text" name="ADDRESS" placeholder="Enter your Address" required>
+        </div>
+
+        <div class="form-group">
+            <label>Gender:</label>
+            <input type="radio" name="Gender" value="Male" id="male"> Male
+            <input type="radio" name="Gender" value="Female" id="female"> Female
+        </div>
+
+        <div class="form-group">
+            <label for="Gmail_ID">Gmail-ID:</label>
+            <input type="email" name="Gmail_ID" placeholder="Enter your Gmail ID" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Password">Password:</label>
+            <input type="password" name="Password" placeholder="Enter your password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="PasswordConfirm">Confirm Password:</label>
+            <input type="password" name="PasswordConfirm" placeholder="Confirm your password" required>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="SIGN UP">
+        </div>
+    </form>
+<script>
+function registerUser(event) {
+    event.preventDefault();
+
+    const name = document.querySelector("input[name='Name']").value;
+    const dob = document.querySelector("input[name='DOB']").value;
+    const address = document.querySelector("input[name='ADDRESS']").value;
+    const gender = document.querySelector("input[name='Gender']:checked").value;
+    const email = document.querySelector("input[name='Gmail_ID']").value;
+    const password = document.querySelector("input[name='Password']").value;
+
+    fetch("http://localhost:3000/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, dob, address, gender, email, password })
+    })
+    .then(response => response.json())
+    .then(data => alert(data.message))
+    .catch(error => console.error("Error:", error));
+}
+    document.getElementById('signup-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        let username = document.getElementById('username').value;
+        
+        // Simulate signup process (Replace this with actual backend integration)
+        localStorage.setItem('loggedInUser', username);
+        
+        // Redirect to home page
+        window.location.href = '../home_final.html';
+    });
+</script>
+
+</script>
+</div>
+
+</body>
+</html>

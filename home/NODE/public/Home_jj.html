@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Delights</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { 
+            font-family: 'Comic Sans MS', cursive, sans-serif; 
+            background-color: #fff5e1; 
+            color: #6b4f4f; 
+            margin: 0; 
+            padding: 0; 
+        }
+        header { 
+            background-color: red; 
+            padding: 20px; 
+            text-align: center; 
+            color: white; 
+        }
+        nav { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 10px 20px; 
+            background-color: yellow; 
+        }
+        nav .logo { 
+            font-size: 24px; 
+            font-weight: bold; 
+            color: #6b4f4f; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 20px; 
+        }
+        .catalogue, .fresh-sweet, .namkeen { 
+            cursor: pointer; 
+            color: #6b4f4f; 
+            font-size: 18px; 
+            text-decoration: underline; 
+        }
+        nav .auth-buttons button { 
+            background-color: red; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            margin-left: 10px; 
+            cursor: pointer; 
+            border-radius: 5px; 
+        }
+        .view-cart-button { 
+            background-color: yellow; 
+            color: #6b4f4f; 
+            padding: 10px 15px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            margin-top: 20px; 
+            position: absolute; 
+            top: 20px; 
+            right: 20px; 
+        }
+        .view-cart-button:hover { 
+            background-color: yellow; 
+        }
+        .section-title { 
+            font-size: 28px; 
+            margin-top: 40px; 
+            color: #6b4f4f; 
+        }
+	 .about-us {
+        background-color: #fff5e1;
+        padding: 40px 20px;
+        text-align: center;
+        color: #6b4f4f;
+    }
+
+    .about-us h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+        color: #ff6f61;
+    }
+
+    .about-us p {
+        font-size: 18px;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+.hero {
+            position: relative;
+            text-align: center;
+            padding: 50px 20px;
+            overflow: hidden;
+        }
+
+        .hero .bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .hero img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 200px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            margin: 20px 0;
+            position: relative;
+            z-index: 1;
+            color: white;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .products-section {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .products-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            justify-items: center;
+        }
+
+        .product-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 200px;
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .product-card h3 {
+            margin: 10px 0;
+            color: #6b4f4f;
+        }
+
+        .product-card p {
+            color: #ff6f61;
+            font-size: 18px;
+        }
+
+        .add-to-cart-button {
+            background-color: #ff6f61;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .add-to-cart-button:hover {
+            background-color: #ff3b2f;
+        }
+
+        iframe {
+            width: 100%; 
+            height: 80vh; 
+            border: none; 
+            margin-top: 20px;
+        }
+        #catalogue-section, #fresh-sweet-section, #namkeen-section { 
+            display: none; 
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Sweet Delights</h1>
+    </header>
+
+    <nav>
+        <div class="logo" onclick="openHomePage()">
+            Sweet Delights
+            <span class="catalogue" onclick="openCatalogue(event)">Catalogue</span>
+            <span class="fresh-sweet" onclick="openFreshSweet(event)">Fresh Sweets</span>
+            <span class="namkeen" onclick="openNamkeen(event)">Namkeen</span>
+        </div>
+        <div class="auth-buttons">
+            <button onclick="location.href='LOGIN PAGE/loginpage.html'">Login</button>
+            <button onclick="location.href='SIGNUP PAGE/signup.html'">Sign Up</button>               
+        </div>
+    </nav>
+
+    <button class="view-cart-button" onclick="window.location.href='cart.html'">View Cart</button>
+
+    <section class="hero">
+        <h1>Indulge in the Sweetest Treats</h1>
+        <p>We offer a wide variety of delicious sweets and desserts. Visit us today for a delightful experience!</p>
+    </section>
+
+
+    <div id="catalogue-section">
+        <iframe src="catalog_page/catalog.html"></iframe>
+    </div>
+
+    <div id="fresh-sweet-section">
+        <iframe src="fresh sweet/freshsweet1.html"></iframe>
+    </div>
+
+    <div id="namkeen-section">
+        <iframe src="fresh sweet/namkeen1.html"></iframe>
+    </div>
+
+    <script>
+        function openCatalogue(event) {
+            event.stopPropagation();
+            hideAllSections();
+            document.getElementById('catalogue-section').style.display = 'block';
+        }
+
+        function openFreshSweet(event) {
+            event.stopPropagation();
+            hideAllSections();
+            document.getElementById('fresh-sweet-section').style.display = 'block';
+        }
+
+        function openNamkeen(event) {
+            event.stopPropagation();
+            hideAllSections();
+            document.getElementById('namkeen-section').style.display = 'block';
+        }
+
+        function openHomePage() {
+            hideAllSections();
+            document.querySelector('.hero').style.display = 'block';
+        }
+
+        function hideAllSections() {
+            document.querySelector('.hero').style.display = 'none';
+            document.getElementById('catalogue-section').style.display = 'none';
+            document.getElementById('fresh-sweet-section').style.display = 'none';
+            document.getElementById('namkeen-section').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

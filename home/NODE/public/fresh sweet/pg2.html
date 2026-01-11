@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweets Shop</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        .header { background: red; color: white; padding: 10px; text-align: center; }
+        .navbar { display: flex; justify-content: center; background: #fff; padding: 10px; border-bottom: 2px solid red; }
+        .navbar a { margin: 0 15px; text-decoration: none; color: red; font-weight: bold; }
+        .container { display: flex; flex-wrap: wrap; justify-content: center; padding: 20px; }
+        .product { border: 1px solid #ddd; margin: 10px; padding: 15px; width: 250px; text-align: center; }
+        .product img { width: 100%; height: auto; }
+        .button { background: red; color: white; padding: 10px; border: none; cursor: pointer; }
+        .cart { position: fixed; top: 10px; right: 10px; background: white; padding: 10px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Sweets Shop</h1>
+    </div>
+    
+    <div class="navbar">
+        <a href="#">Home</a>
+        <a href="#">Fresh Sweets</a>
+        <a href="#">Namkeen</a>
+        <a href="#">Sweets</a>
+        <a href="#">Dry Fruits</a>
+        <a href="#">Bikano</a>
+        <a href="#">Our Restaurants</a>
+        <a href="#">Catalogue</a>
+        <a href="#">Food Delivery</a>
+    </div>
+    
+    <div class="cart">
+        <h3>Cart</h3>
+        <ul id="cart-items"></ul>
+    </div>
+    
+    <div class="container">
+        <div class="product">
+            <img src="sweet4.jpg" alt="Sweet 4">
+                <h3>Barfi (Milk Cake)</h3>
+                <p class="price">399rs/kg</p>
+            <button class="button" onclick="addToCart('Barfi (Milk Cake)', 399)">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="sweet5.jpg" alt="Sweet 5">
+                <h3>Kaju Katli (Cashew Fudge)</h3>
+                <p class="price">999rs/kg</p>
+            <button class="button" onclick="addToCart('Kaju Katli (Cashew Fudge)', 999)">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="sweet6.jpg" alt="Sweet 6">
+                <h3>Peda (Mathura, Milk Peda)</h3>
+                <p class="price">399rs/kg</p>
+            <button class="button" onclick="addToCart('Peda (Mathura, Milk Peda)', 399)">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="sweet2.jpg" alt="Sweet 2">
+                <h3>Rasgulla</h3>
+                <p class="price">499rs/kg</p>
+            <button class="button" onclick="addToCart('Rasgulla', 499)">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="sweet7.jpg" alt="Sweet 7">
+                <h3>Soan Papdi</h3>
+                <p class="price">299rs/kg</p>
+            <button class="button" onclick="addToCart('Soan Papdi', 299)">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="sweet1.jpg" alt="Sweet 1">
+                <h3>Gulab Jamun</h3>
+                <p class="price">399rs/kg</p>
+            <button class="button" onclick="addToCart('Gulab Jamun', 399)">Add to Cart</button>
+        </div>
+	<div class="product">
+            <img src="sweet3.jpg" alt="Sweet 3">
+                <h3>Jalebi</h3>
+                <p class="price">499rs/kg</p>
+            <button class="button" onclick="addToCart('Jalebi', 499)">Add to Cart</button>
+        </div>
+    </div>
+    
+    <script>
+        function addToCart(item, price) {
+            const cartList = document.getElementById('cart-items');
+            const listItem = document.createElement('li');
+            listItem.textContent = `${item} - Rs. ${price}`;
+            cartList.appendChild(listItem);
+        }
+    </script>
+</body>
+</html>

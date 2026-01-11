@@ -1,0 +1,75 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff; /* White background for the main content */
+    margin: 0;
+    padding: 0;
+}
+
+.catalog {
+    padding: 20px;
+    text-align: center;
+    background-color: #fff; /* Ensure background is white for the catalog */
+}
+
+header {
+    background-color: #ff6600; /* Orange background for the header */
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.product-item {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.product-item img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.product-item h3 {
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+.product-item .price {
+    font-size: 1.5rem;
+    color: #4caf50;
+    margin: 10px 0;
+}
+
+.product-item .buy-now {
+    display: inline-block;
+    background-color: #ff6600; /* Orange button */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.product-item .buy-now:hover {
+    background-color: #e65c00; /* Darker orange on hover */
+}
+
+footer {
+    background-color: #ff6600; /* Orange footer */
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
