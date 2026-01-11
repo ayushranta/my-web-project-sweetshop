@@ -1,14 +1,20 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const mysql = require('mysql2');  // FIXED
+const mysql = require('mysql2');
+const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
+// ==========================
 // Middleware
+// ==========================
 app.use(cors());
 app.use(bodyParser.json());
+
+// Serve all static HTML, CSS, JS, images, videos from public/
+app.use(express.static(path.join(__dirname, 'public')));
 
 // ==========================
 // MySQL Connection (Railway)
@@ -29,11 +35,11 @@ db.connect(err => {
     }
 });
 
-// --------------------------
-// Root route
-// --------------------------
+// ==========================
+// Root route → your homepage
+// ==========================
 app.get("/", (req, res) => {
-    res.send("Server is running on Render!");
+    res.sendFile(path.join(__dirname, "public", "home_0.html"));
 });
 
 // ==========================
@@ -91,10 +97,7 @@ app.post('/admin-login', (req, res) => {
         return res.status(400).json({ message: 'Username and password are required' });
     }
 
-    const adminUsername = "admin";
-    const adminPassword = "admin123";
-
-    if (username === adminUsername && password === adminPassword) {
+    if (username === "admin" && password === "admin123") {
         res.status(200).json({ message: 'Admin login successful!' });
     } else {
         res.status(401).json({ message: 'Invalid admin credentials' });
