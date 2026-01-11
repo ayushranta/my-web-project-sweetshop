@@ -7,25 +7,15 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// ==========================
-// CORS + JSON Middleware
-// ==========================
-app.use(cors({
-    origin: "*",               // Allow all frontends
-    methods: ["GET", "POST"],  // Allow required methods
-    allowedHeaders: ["Content-Type"]
-}));
-
+// Middleware
+app.use(cors());
 app.use(bodyParser.json());
-app.use(express.json());
+
+// Serve static files (HTML, CSS, JS)
+app.use(express.static(path.join(__dirname, "public")));
 
 // ==========================
-// Serve static frontend
-// ==========================
-app.use(express.static(path.join(__dirname, 'public')));
-
-// ==========================
-// MySQL Connection
+// MYSQL CONNECTION (Railway)
 // ==========================
 const db = mysql.createConnection({
     host: process.env.DB_HOST || "switchback.proxy.rlwy.net",
@@ -44,66 +34,60 @@ db.connect(err => {
 });
 
 // ==========================
-// Home Route
+// HOME PAGE
 // ==========================
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "home_0.html"));
 });
 
 // ==========================
-// User Signup API
+// SIGNUP ROUTE
 // ==========================
-app.post('/signup', (req, res) => {
-    console.log("📩 Signup Request Received:", req.body); // Debug log
-
+app.post("/signup", (req, res) => {
     const { name, dob, address, gender, email, password } = req.body;
 
     if (!name || !dob || !address || !gender || !email || !password) {
-        return res.status(400).json({ message: 'All fields are required!' });
+        return res.status(400).json({ message: "All fields are required" });
     }
 
-    const query = `INSERT INTO users (name, dob, address, gender, email, password)
-                   VALUES (?, ?, ?, ?, ?, ?)`;
+    const query = `
+        INSERT INTO users (name, dob, address, gender, email, password)
+        VALUES (?, ?, ?, ?, ?, ?)
+    `;
 
-    db.query(query, [name, dob, address, gender, email, password], (err, result) => {
+    db.query(query, [name, dob, address, gender, email, password], (err, results) => {
         if (err) {
-            console.error("❌ Signup DB Error:", err);
-            return res.status(500).json({ message: 'Error registering user' });
+            console.log(err);
+            return res.status(500).json({ message: "Database error" });
         }
-        res.status(201).json({ message: 'User registered successfully!' });
+
+        res.status(201).json({ message: "Signup successful!" });
     });
 });
 
 // ==========================
-// User Login API
+// LOGIN ROUTE
 // ==========================
-app.post('/login', (req, res) => {
-    console.log("📩 Login Request:", req.body);
-
+app.post("/login", (req, res) => {
     const { email, password } = req.body;
 
-    if (!email || !password) {
-        return res.status(400).json({ message: 'Email and password are required' });
-    }
-
     const query = "SELECT * FROM users WHERE email = ? AND password = ?";
-
     db.query(query, [email, password], (err, results) => {
         if (err) {
-            console.error("❌ Login DB Error:", err);
-            return res.status(500).json({ message: 'Database error' });
+            console.log(err);
+            return res.status(500).json({ message: "Database error" });
         }
 
-        if (results.length > 0) {
-            res.status(200).json({ message: 'Login successful!' });
-        } else {
-            res.status(401).json({ message: 'Invalid credentials' });
+        if (results.length === 0) {
+            return res.status(401).json({ message: "Invalid email or password" });
         }
+
+        res.json({ message: "Login successful!" });
     });
 });
 
 // ==========================
-// Start Server
+// START SERVER
 // ==========================
 app.listen(port, () => {
     console.log(`🚀 Server running on port ${port}`);
