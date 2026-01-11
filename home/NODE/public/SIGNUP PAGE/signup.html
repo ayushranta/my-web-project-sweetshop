@@ -134,7 +134,7 @@ function registerUser(event) {
     const email = document.querySelector("input[name='Gmail_ID']").value;
     const password = document.querySelector("input[name='Password']").value;
 
-    fetch("http://localhost:3000/signup", {
+    fetch("https://my-web-project-sweetshop-1.onrender.com/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, dob, address, gender, email, password })
@@ -161,3 +161,4 @@ function registerUser(event) {
 
 </body>
 </html>
+
